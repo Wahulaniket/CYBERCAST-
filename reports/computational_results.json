@@ -1,0 +1,7 @@
+{
+    "training_time_s": 1.4744515419006348,
+    "inference_time_s": 0.007331371307373047,
+    "peak_GPU_memory_MB": 86.4638671875,
+    "CPU_RAM_usage_MB": 250.0,
+    "model_parameter_count": 8225
+}

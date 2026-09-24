@@ -1,0 +1,3 @@
+Attack,Failure_Reason,Probability
+ATT-5,Weak signal / slow infiltration,0.3
+ATT-12,Insufficient sequence context,0.45

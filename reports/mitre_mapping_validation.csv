@@ -1,0 +1,3 @@
+dataset_attack_type,derived_stage,mapping_confidence,supporting_features
+PortScan,RECONNAISSANCE,APPROXIMATE,"SYN ratio, new port count"
+Bot,COMMAND_AND_CONTROL,APPROXIMATE,periodic flow rate

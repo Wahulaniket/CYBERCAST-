@@ -1,0 +1,175 @@
+         dataset                      feature    potential_role
+0        archive                     Dst Port  destination_port
+1        archive                     Protocol          protocol
+2        archive                    Timestamp         timestamp
+3        archive                Flow Duration          duration
+4        archive                 Tot Fwd Pkts           packets
+5        archive                 Tot Bwd Pkts           packets
+6        archive              TotLen Fwd Pkts           packets
+7        archive              TotLen Bwd Pkts           packets
+8        archive              Fwd Pkt Len Max           packets
+9        archive              Fwd Pkt Len Min           packets
+10       archive             Fwd Pkt Len Mean           packets
+11       archive              Fwd Pkt Len Std           packets
+12       archive              Bwd Pkt Len Max           packets
+13       archive              Bwd Pkt Len Min           packets
+14       archive             Bwd Pkt Len Mean           packets
+15       archive              Bwd Pkt Len Std           packets
+16       archive                  Flow Byts/s           unknown
+17       archive                  Flow Pkts/s           packets
+18       archive                Flow IAT Mean               IAT
+19       archive                 Flow IAT Std               IAT
+20       archive                 Flow IAT Max               IAT
+21       archive                 Flow IAT Min               IAT
+22       archive                  Fwd IAT Tot               IAT
+23       archive                 Fwd IAT Mean               IAT
+24       archive                  Fwd IAT Std               IAT
+25       archive                  Fwd IAT Max               IAT
+26       archive                  Fwd IAT Min               IAT
+27       archive                  Bwd IAT Tot               IAT
+28       archive                 Bwd IAT Mean               IAT
+29       archive                  Bwd IAT Std               IAT
+30       archive                  Bwd IAT Max               IAT
+31       archive                  Bwd IAT Min               IAT
+32       archive                Fwd PSH Flags          tcp_flag
+33       archive                Bwd PSH Flags          tcp_flag
+34       archive                Fwd URG Flags          tcp_flag
+35       archive                Bwd URG Flags          tcp_flag
+36       archive               Fwd Header Len           unknown
+37       archive               Bwd Header Len           unknown
+38       archive                   Fwd Pkts/s           packets
+39       archive                   Bwd Pkts/s           packets
+40       archive                  Pkt Len Min           packets
+41       archive                  Pkt Len Max           packets
+42       archive                 Pkt Len Mean           packets
+43       archive                  Pkt Len Std           packets
+44       archive                  Pkt Len Var           packets
+45       archive                 FIN Flag Cnt          tcp_flag
+46       archive                 SYN Flag Cnt          tcp_flag
+47       archive                 RST Flag Cnt          tcp_flag
+48       archive                 PSH Flag Cnt          tcp_flag
+49       archive                 ACK Flag Cnt          tcp_flag
+50       archive                 URG Flag Cnt          tcp_flag
+51       archive               CWE Flag Count          tcp_flag
+52       archive                 ECE Flag Cnt          tcp_flag
+53       archive                Down/Up Ratio           unknown
+54       archive                 Pkt Size Avg           packets
+55       archive             Fwd Seg Size Avg           unknown
+56       archive             Bwd Seg Size Avg           unknown
+57       archive               Fwd Byts/b Avg           unknown
+58       archive               Fwd Pkts/b Avg           packets
+59       archive             Fwd Blk Rate Avg           unknown
+60       archive               Bwd Byts/b Avg           unknown
+61       archive               Bwd Pkts/b Avg           packets
+62       archive             Bwd Blk Rate Avg           unknown
+63       archive             Subflow Fwd Pkts           packets
+64       archive             Subflow Fwd Byts           unknown
+65       archive             Subflow Bwd Pkts           packets
+66       archive             Subflow Bwd Byts           unknown
+67       archive            Init Fwd Win Byts       window_size
+68       archive            Init Bwd Win Byts       window_size
+69       archive            Fwd Act Data Pkts           packets
+70       archive             Fwd Seg Size Min           unknown
+71       archive                  Active Mean           unknown
+72       archive                   Active Std           unknown
+73       archive                   Active Max           unknown
+74       archive                   Active Min           unknown
+75       archive                    Idle Mean        identifier
+76       archive                     Idle Std        identifier
+77       archive                     Idle Max        identifier
+78       archive                     Idle Min        identifier
+79       archive                        Label             label
+80       archive                      Flow ID        identifier
+81       archive                       Src IP         source_ip
+82       archive                     Src Port       source_port
+83       archive                       Dst IP    destination_ip
+84   CIC-IDS2017             Destination Port           unknown
+85   CIC-IDS2017                Flow Duration          duration
+86   CIC-IDS2017            Total Fwd Packets           packets
+87   CIC-IDS2017       Total Backward Packets           packets
+88   CIC-IDS2017  Total Length of Fwd Packets           packets
+89   CIC-IDS2017  Total Length of Bwd Packets           packets
+90   CIC-IDS2017        Fwd Packet Length Max           packets
+91   CIC-IDS2017        Fwd Packet Length Min           packets
+92   CIC-IDS2017       Fwd Packet Length Mean           packets
+93   CIC-IDS2017        Fwd Packet Length Std           packets
+94   CIC-IDS2017        Bwd Packet Length Max           packets
+95   CIC-IDS2017        Bwd Packet Length Min           packets
+96   CIC-IDS2017       Bwd Packet Length Mean           packets
+97   CIC-IDS2017        Bwd Packet Length Std           packets
+98   CIC-IDS2017                 Flow Bytes/s             bytes
+99   CIC-IDS2017               Flow Packets/s           packets
+100  CIC-IDS2017                Flow IAT Mean               IAT
+101  CIC-IDS2017                 Flow IAT Std               IAT
+102  CIC-IDS2017                 Flow IAT Max               IAT
+103  CIC-IDS2017                 Flow IAT Min               IAT
+104  CIC-IDS2017                Fwd IAT Total               IAT
+105  CIC-IDS2017                 Fwd IAT Mean               IAT
+106  CIC-IDS2017                  Fwd IAT Std               IAT
+107  CIC-IDS2017                  Fwd IAT Max               IAT
+108  CIC-IDS2017                  Fwd IAT Min               IAT
+109  CIC-IDS2017                Bwd IAT Total               IAT
+110  CIC-IDS2017                 Bwd IAT Mean               IAT
+111  CIC-IDS2017                  Bwd IAT Std               IAT
+112  CIC-IDS2017                  Bwd IAT Max               IAT
+113  CIC-IDS2017                  Bwd IAT Min               IAT
+114  CIC-IDS2017                Fwd PSH Flags          tcp_flag
+115  CIC-IDS2017                Bwd PSH Flags          tcp_flag
+116  CIC-IDS2017                Fwd URG Flags          tcp_flag
+117  CIC-IDS2017                Bwd URG Flags          tcp_flag
+118  CIC-IDS2017            Fwd Header Length           unknown
+119  CIC-IDS2017            Bwd Header Length           unknown
+120  CIC-IDS2017                Fwd Packets/s           packets
+121  CIC-IDS2017                Bwd Packets/s           packets
+122  CIC-IDS2017            Min Packet Length           packets
+123  CIC-IDS2017            Max Packet Length           packets
+124  CIC-IDS2017           Packet Length Mean           packets
+125  CIC-IDS2017            Packet Length Std           packets
+126  CIC-IDS2017       Packet Length Variance           packets
+127  CIC-IDS2017               FIN Flag Count          tcp_flag
+128  CIC-IDS2017               SYN Flag Count          tcp_flag
+129  CIC-IDS2017               RST Flag Count          tcp_flag
+130  CIC-IDS2017               PSH Flag Count          tcp_flag
+131  CIC-IDS2017               ACK Flag Count          tcp_flag
+132  CIC-IDS2017               URG Flag Count          tcp_flag
+133  CIC-IDS2017               CWE Flag Count          tcp_flag
+134  CIC-IDS2017               ECE Flag Count          tcp_flag
+135  CIC-IDS2017                Down/Up Ratio           unknown
+136  CIC-IDS2017          Average Packet Size           packets
+137  CIC-IDS2017         Avg Fwd Segment Size           unknown
+138  CIC-IDS2017         Avg Bwd Segment Size           unknown
+139  CIC-IDS2017          Fwd Header Length.1           unknown
+140  CIC-IDS2017           Fwd Avg Bytes/Bulk             bytes
+141  CIC-IDS2017         Fwd Avg Packets/Bulk           packets
+142  CIC-IDS2017            Fwd Avg Bulk Rate           unknown
+143  CIC-IDS2017           Bwd Avg Bytes/Bulk             bytes
+144  CIC-IDS2017         Bwd Avg Packets/Bulk           packets
+145  CIC-IDS2017            Bwd Avg Bulk Rate           unknown
+146  CIC-IDS2017          Subflow Fwd Packets           packets
+147  CIC-IDS2017            Subflow Fwd Bytes             bytes
+148  CIC-IDS2017          Subflow Bwd Packets           packets
+149  CIC-IDS2017            Subflow Bwd Bytes             bytes
+150  CIC-IDS2017       Init_Win_bytes_forward             bytes
+151  CIC-IDS2017      Init_Win_bytes_backward             bytes
+152  CIC-IDS2017             act_data_pkt_fwd           packets
+153  CIC-IDS2017         min_seg_size_forward           unknown
+154  CIC-IDS2017                  Active Mean           unknown
+155  CIC-IDS2017                   Active Std           unknown
+156  CIC-IDS2017                   Active Max           unknown
+157  CIC-IDS2017                   Active Min           unknown
+158  CIC-IDS2017                    Idle Mean        identifier
+159  CIC-IDS2017                     Idle Std        identifier
+160  CIC-IDS2017                     Idle Max        identifier
+161  CIC-IDS2017                     Idle Min        identifier
+162  CIC-IDS2017                        Label             label
+163       CTU-13                          dur           unknown
+164       CTU-13                        proto          protocol
+165       CTU-13                          dir           unknown
+166       CTU-13                        state           unknown
+167       CTU-13                         stos           unknown
+168       CTU-13                         dtos           unknown
+169       CTU-13                     tot_pkts           packets
+170       CTU-13                    tot_bytes             bytes
+171       CTU-13                    src_bytes             bytes
+172       CTU-13                        label             label
+173       CTU-13                       Family           unknown

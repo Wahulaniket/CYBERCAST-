@@ -1,0 +1,7 @@
+batch_size: 64
+default_horizon: 3
+device: auto
+max_rollout: 10
+sequence_length: 10
+state_dimension: 30
+window_seconds: 5

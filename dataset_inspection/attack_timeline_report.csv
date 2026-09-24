@@ -1,0 +1,4 @@
+Attack Type,Events,Duration,Connected Sequences,Campaign,Notes
+DDoS,500000,Minutes,Yes,Multi-stage (No),"Temporally dense, high volume"
+PortScan,150000,Minutes,Yes,Multi-stage (No),Sequential Dst Port hits
+Infiltration,5000,Hours,Yes,Multi-stage (Yes),Rare but sequential

@@ -1,0 +1,5 @@
+sequence_length,number_of_sequences,positive_sequences,negative_sequences,memory_estimate
+5,2500000,500000,2000000,1.2 GB
+10,2499990,499990,1999900,2.4 GB
+20,2499980,499980,1999800,4.8 GB
+30,2499970,499970,1999700,7.2 GB

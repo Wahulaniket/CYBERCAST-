@@ -1,0 +1,4 @@
+categorical_encoding: TargetEncoder
+infinity_handling: clip_to_max
+numeric_imputation: median
+scaler: StandardScaler

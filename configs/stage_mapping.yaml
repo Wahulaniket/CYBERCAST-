@@ -1,0 +1,10 @@
+BENIGN:
+  threshold: 0.0
+COMMAND_AND_CONTROL:
+  threshold: 0.9
+DISCOVERY:
+  threshold: 0.6
+INITIAL_ACCESS:
+  threshold: 0.75
+RECONNAISSANCE:
+  threshold: 0.3

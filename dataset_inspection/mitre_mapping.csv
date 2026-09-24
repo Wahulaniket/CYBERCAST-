@@ -1,0 +1,5 @@
+Attack Type,Dataset Label,Possible ATT&CK Technique,Possible ATT&CK Tactic/Stage,Mapping Confidence,Evidence,Limitations
+PortScan,PortScan,Network Service Scanning,Discovery / Reconnaissance,DIRECT,Name,None
+Infiltration,Infiltration,Exploit Public-Facing App,Initial Access,APPROXIMATE,Name,Broad category
+Botnet,Bot,Command and Control,Command and Control,DIRECT,C2 Traffic,None
+DDoS,DDoS,Endpoint Denial of Service,Impact,DIRECT,Traffic Volume,None

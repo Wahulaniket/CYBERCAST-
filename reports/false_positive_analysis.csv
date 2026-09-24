@@ -1,0 +1,3 @@
+Window_ID,Pattern,Count
+1,High SYN ratio without payload,150
+2,Spikes in new destination count,85

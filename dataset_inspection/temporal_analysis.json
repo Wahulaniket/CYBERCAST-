@@ -1,0 +1,13 @@
+{
+    "timestamp_available": true,
+    "timestamp_resolution": "seconds/microseconds",
+    "temporal_ordering": "Needs sorting by Timestamp",
+    "sessions_possible": true,
+    "recommended_windows": [
+        "1-second",
+        "5-second",
+        "30-second"
+    ],
+    "recommended_window": "5-second",
+    "attack_density": "Highly variable per window"
+}

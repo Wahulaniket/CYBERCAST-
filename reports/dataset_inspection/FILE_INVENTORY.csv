@@ -1,0 +1,9 @@
+filename,full_path,extension,file_size_bytes,last_modified,type
+Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,d:/working_projects/SIH/cyberCast2\data\CIC-IDS2017\Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv,.csv,77123859,2026-09-22T13:25:38.569881,CSV
+Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,d:/working_projects/SIH/cyberCast2\data\CIC-IDS2017\Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv,.csv,76906168,2026-09-22T13:25:39.152494,CSV
+Friday-WorkingHours-Morning.pcap_ISCX.csv,d:/working_projects/SIH/cyberCast2\data\CIC-IDS2017\Friday-WorkingHours-Morning.pcap_ISCX.csv,.csv,58316725,2026-09-22T13:25:39.729665,CSV
+Monday-WorkingHours.pcap_ISCX.csv,d:/working_projects/SIH/cyberCast2\data\CIC-IDS2017\Monday-WorkingHours.pcap_ISCX.csv,.csv,176927918,2026-09-22T13:25:41.467094,CSV
+Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,d:/working_projects/SIH/cyberCast2\data\CIC-IDS2017\Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv,.csv,83102436,2026-09-22T13:25:42.210306,CSV
+Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,d:/working_projects/SIH/cyberCast2\data\CIC-IDS2017\Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv,.csv,52023263,2026-09-22T13:25:42.731800,CSV
+Tuesday-WorkingHours.pcap_ISCX.csv,d:/working_projects/SIH/cyberCast2\data\CIC-IDS2017\Tuesday-WorkingHours.pcap_ISCX.csv,.csv,135078995,2026-09-22T13:25:44.038366,CSV
+Wednesday-workingHours.pcap_ISCX.csv,d:/working_projects/SIH/cyberCast2\data\CIC-IDS2017\Wednesday-workingHours.pcap_ISCX.csv,.csv,225166395,2026-09-22T13:25:45.842366,CSV

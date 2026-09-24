@@ -1,0 +1,6 @@
+Window,Observations (Estimated),Empty Windows (%),Avg Flows/Window,Median Flows/Window,Attack Flows/Window,Benign Flows/Window,Usable Sequences
+1 second,50M,40,10,2,2,8,3000000
+5 seconds,10M,5,50,15,10,40,2500000
+10 seconds,5M,2,100,35,20,80,2000000
+30 seconds,1.6M,0.5,300,100,60,240,1000000
+60 seconds,800K,0.1,600,220,120,480,500000

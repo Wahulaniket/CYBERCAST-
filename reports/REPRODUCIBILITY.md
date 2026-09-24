@@ -1,0 +1,13 @@
+# Reproducibility Guide
+- Python version: 3.11.x
+- PyTorch version: 2.x
+- Streamlit version: 1.x
+- CUDA requirements: Optional (auto-fallback to CPU)
+- GPU information: VRAM footprint < 50MB
+- dataset preparation: Synthetic temporal structural generation (Phase 4.1 script)
+- training configuration: lambda_risk=1.0, lambda_state=0.5
+- model checkpoint: models/world_model.pt
+- scaler: models/scaler.pkl
+- feature schema: models/feature_schema.json
+- random seeds: np.random.seed(42), torch.manual_seed(42)
+- commands: `pytest tests/`, `streamlit run dashboard/app.py`

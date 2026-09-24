@@ -1,0 +1,19 @@
+PS Requirement,Available?,Exact Dataset Column(s),Derived Feature Possible?,Derivation Method,Data Granularity,Reliability,Importance,Notes
+source IP,PARTIAL,Src IP (IDS2018),NO,,Flow,HIGH,Critical,Missing in some CTU-13/IDS2017 files
+destination IP,PARTIAL,Dst IP (IDS2018),NO,,Flow,HIGH,Critical,Missing in some files
+source port,PARTIAL,Src Port (IDS2018),NO,,Flow,HIGH,High,
+destination port,YES,"Dst Port, Destination Port",NO,,Flow,HIGH,High,
+TCP flag bitmask,YES,"FIN Flag Cnt, SYN Flag Cnt, RST Flag Cnt, etc.",YES,Concatenate flag counts to bitmask,Flow,HIGH,Medium,
+protocol,YES,"Protocol, proto",NO,,Flow,HIGH,High,
+bytes transferred,YES,"Flow Bytes/s, tot_bytes, Subflow Fwd Bytes",YES,Sum of Fwd and Bwd,Flow,HIGH,High,
+packets per flow,YES,"Tot Fwd Pkts, tot_pkts",YES,Sum of Fwd and Bwd,Flow,HIGH,High,
+flow duration,YES,"Flow Duration, dur",NO,,Flow,HIGH,High,
+inter-arrival time statistics,YES,"Flow IAT Mean, Flow IAT Std",NO,,Flow,HIGH,High,
+bidirectional flow ratios,YES,Down/Up Ratio,YES,Ratio of Fwd/Bwd bytes or packets,Flow,MEDIUM,Medium,
+TTL,NO,,NO,,Unknown,UNKNOWN,Medium,Not in default CSVs
+TTL variance,NO,,NO,,Unknown,UNKNOWN,Medium,
+TCP window size,YES,"Init Fwd Win Byts, Init_Win_bytes_forward",NO,,Flow,MEDIUM,Medium,Flow-level aggregation of packet window
+IP fragment flags,NO,,NO,,Unknown,UNKNOWN,Medium,
+payload size distribution,PARTIAL,"Pkt Size Avg, Fwd Pkt Len Mean",NO,,Flow,MEDIUM,Medium,Available only as flow-level aggregates
+sequential/randomised port scanning behaviour,PARTIAL,"Dst Port, Timestamp",YES,Analyze port changes over time windows per source IP,Window,MEDIUM,High,Requires temporal reconstruction
+retransmission counts,NO,,NO,,Unknown,UNKNOWN,Medium,Not present in flow features

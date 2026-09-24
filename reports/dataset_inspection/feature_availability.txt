@@ -1,0 +1,9 @@
+TTL: True
+TCP Window: True
+IP Fragmentation: True
+Payload Length: True
+Source Port: True
+Destination Port: True
+Packet Timestamp: True
+TCP Sequence: True
+TCP ACK: True

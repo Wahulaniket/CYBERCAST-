@@ -1,0 +1,43 @@
+BENIGN:
+  behavioural_indicators:
+  - low new destination rate
+  - normal variance
+  confidence: HIGH
+COMMAND_AND_CONTROL:
+  behavioural_indicators:
+  - periodic communication
+  - low-volume repeated flows
+  confidence: APPROXIMATE
+DISCOVERY:
+  behavioural_indicators:
+  - internal host exploration
+  - increasing unique destination count
+  confidence: APPROXIMATE
+EXFILTRATION:
+  behavioural_indicators:
+  - outbound byte volume
+  - destination concentration
+  confidence: APPROXIMATE
+IMPACT:
+  behavioural_indicators:
+  - denial of service volume
+  confidence: APPROXIMATE
+INITIAL_ACCESS:
+  behavioural_indicators:
+  - suspicious external-to-internal connection
+  - unusual service access
+  confidence: APPROXIMATE
+LATERAL_MOVEMENT:
+  behavioural_indicators:
+  - internal source to multiple internal destinations
+  confidence: APPROXIMATE
+RECONNAISSANCE:
+  behavioural_indicators:
+  - high new destination rate
+  - high new port rate
+  - high SYN ratio
+  confidence: APPROXIMATE
+UNKNOWN:
+  behavioural_indicators:
+  - insufficient evidence
+  confidence: HIGH

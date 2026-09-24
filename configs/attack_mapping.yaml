@@ -1,0 +1,26 @@
+CIC-IDS2017:
+  Bot:
+    mapping_confidence: HIGH
+    mitre_stage: COMMAND_AND_CONTROL
+    normalized_attack_type: Botnet
+  DDoS:
+    mapping_confidence: HIGH
+    mitre_stage: IMPACT
+    normalized_attack_type: DDoS
+  Infiltration:
+    mapping_confidence: MEDIUM
+    mitre_stage: INITIAL_ACCESS
+    normalized_attack_type: Infiltration
+  PortScan:
+    mapping_confidence: HIGH
+    mitre_stage: DISCOVERY
+    normalized_attack_type: PortScan
+CSE-CIC-IDS2018:
+  DDoS attacks-LOIC-HTTP:
+    mapping_confidence: HIGH
+    mitre_stage: IMPACT
+    normalized_attack_type: DDoS
+  Infilteration:
+    mapping_confidence: MEDIUM
+    mitre_stage: INITIAL_ACCESS
+    normalized_attack_type: Infiltration
