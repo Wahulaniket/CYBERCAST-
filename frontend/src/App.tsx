@@ -295,9 +295,11 @@ function App() {
               <div className="kpi-sub">ATT&CK-aligned derived stage</div>
             </div>
             <div className="panel" style={{ padding: '16px' }}>
-              <div className="panel-title" style={{ marginBottom: 8 }}>ACTIVE ENDPOINTS</div>
-              <div className="kpi-value text-primary" style={{ fontSize: '1.5rem' }}>{networkNodes}</div>
-              <div className="kpi-sub">From 5s telemetry window</div>
+              <div className="panel-title" style={{ marginBottom: 8 }}>OPERATIONAL STATUS</div>
+              <div className={`kpi-value ${riskColorClass}`} style={{ fontSize: '1.25rem', lineHeight: '1.2' }}>
+                {result ? (result.current_risk > 0.6 ? 'CRITICAL' : result.current_risk > 0.4 ? 'HIGH' : result.current_risk > 0.2 ? 'ELEVATED' : 'LOW') : 'UNKNOWN'}
+              </div>
+              <div className="kpi-sub">Derived risk level</div>
             </div>
             <div className="panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column' }}>
               <div className="panel-title" style={{ marginBottom: 8 }}>TELEMETRY REPLAY</div>
