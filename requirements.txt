@@ -1,1 +1,10 @@
-torch\npandas\nnumpy\nscikit-learn\npyyaml\nstreamlit\npytest\n
+torch
+pandas
+numpy
+scikit-learn
+pyyaml
+streamlit
+pytest
+fastapi
+uvicorn
+python-multipart
