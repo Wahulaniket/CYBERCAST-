@@ -6,6 +6,10 @@ import io
 
 from backend.schemas import HealthResponse, ModelInfoResponse, AnalyzeRequest
 from backend.services.inference_service import inference_service
+from backend.services.live_capture_service import live_capture_service
+import asyncio
+from fastapi import WebSocket, WebSocketDisconnect
+from pydantic import BaseModel
 
 app = FastAPI(title="CyberCast SOC API")
 
@@ -109,3 +113,40 @@ async def validate_upload(file: UploadFile = File(...)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+class LiveStartRequest(BaseModel):
+    interface: str
+
+@app.post("/api/live/start")
+async def start_live_capture(req: LiveStartRequest):
+    try:
+        live_capture_service.start_capture(req.interface)
+        return {"status": "success", "message": "Capture started"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/api/live/stop")
+async def stop_live_capture():
+    live_capture_service.stop_capture()
+    return {"status": "success", "message": "Capture stopped"}
+
+@app.get("/api/live/status")
+async def get_live_status():
+    return live_capture_service.get_status()
+
+@app.websocket("/ws/live")
+async def websocket_live_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    queue = asyncio.Queue()
+    live_capture_service.subscribers.add(queue)
+    try:
+        while True:
+            # Wait for messages from the service and forward them
+            message = await queue.get()
+            await websocket.send_json(message)
+    except WebSocketDisconnect:
+        pass
+    except Exception as e:
+        print(f"WebSocket Error: {e}")
+    finally:
+        live_capture_service.subscribers.discard(queue)

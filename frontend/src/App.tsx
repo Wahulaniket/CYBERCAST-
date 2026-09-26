@@ -12,8 +12,11 @@ import ModelPerformancePage from './pages/ModelPerformancePage';
 import ThreatTimelinePage from './pages/ThreatTimelinePage';
 import ExplainabilityPage from './pages/ExplainabilityPage';
 import NetworkEvidencePage from './pages/NetworkEvidencePage';
+import { useLiveCapture } from './hooks/useLiveCapture';
 
 function App() {
+  const [appMode, setAppMode] = useState<'DEMO' | 'LIVE'>('DEMO');
+  const liveState = useLiveCapture();
   const [activeTab, setActiveTab] = useState('OVERVIEW');
   const [kSteps, setKSteps] = useState<number>(3);
   const [device, setDevice] = useState<'cpu' | 'gpu' | 'auto'>('auto');
@@ -173,15 +176,16 @@ function App() {
   ];
 
   // Derive dynamic KPIs
-  const isHighRisk = result ? result.current_risk > 0.5 : false;
-  const isElevated = result ? result.current_risk > 0.3 : false;
+  const activeResult = appMode === 'LIVE' ? liveState.liveResult : result;
+  
+  const isHighRisk = activeResult ? activeResult.current_risk > 0.5 : false;
+  const isElevated = activeResult ? activeResult.current_risk > 0.3 : false;
   const riskColorClass = isHighRisk ? 'text-critical' : isElevated ? 'text-warning' : 'text-info';
   const formatStage = (stage: string) => stage.replace(/_/g, ' ').toUpperCase();
-  const currentStage = result ? formatStage(result.predicted_stage) : 'UNKNOWN';
+  const currentStage = activeResult ? formatStage(activeResult.predicted_stage) : 'UNKNOWN';
 
   // Dynamic values
-  const currentRiskFormatted = result ? (result.current_risk * 100).toFixed(1) : '--';
-  const networkNodes = result?.network_graph?.nodes?.length || 0;
+  const currentRiskFormatted = activeResult ? (activeResult.current_risk * 100).toFixed(1) : '--';
   
   return (
     <div className="app-layout">
@@ -238,7 +242,15 @@ function App() {
           </div>
           <div className="topbar-badges">
             <div className="badge">OFFLINE MODE</div>
-            <div className="badge badge-outline">DEMO REPLAY</div>
+            <select 
+              value={appMode} 
+              onChange={(e) => setAppMode(e.target.value as 'DEMO' | 'LIVE')} 
+              className="badge badge-outline"
+              style={{ background: 'transparent', color: 'inherit', border: '1px solid var(--border-subtle)', appearance: 'none', cursor: 'pointer' }}
+            >
+              <option value="DEMO" style={{ background: '#111' }}>DEMO REPLAY — FRIDAY TEST DATASET</option>
+              <option value="LIVE" style={{ background: '#111' }}>LIVE LAB MODE</option>
+            </select>
             <div className="badge" style={{ borderColor: 'var(--status-healthy)', color: 'var(--status-healthy)' }}>MODEL VALID</div>
           </div>
         </div>
@@ -281,28 +293,62 @@ function App() {
           </div>
 
           {/* Dynamic KPI Header Row - Visible across all tabs */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 16 }}>
             <div className="panel" style={{ padding: '16px' }}>
               <div className="panel-title" style={{ marginBottom: 8 }}>FUTURE THREAT RISK</div>
               <div className={`kpi-value ${riskColorClass}`}>{currentRiskFormatted}%</div>
-              <div className="kpi-sub">Horizon: {kSteps} steps</div>
+              <div className="kpi-sub">Predicted future infiltration risk</div>
             </div>
             <div className="panel" style={{ padding: '16px' }}>
-              <div className="panel-title" style={{ marginBottom: 8 }}>ATTACK STAGE</div>
+              <div className="panel-title" style={{ marginBottom: 8 }}>ATT&CK-ALIGNED STAGE</div>
               <div className={`kpi-value ${isHighRisk ? 'text-critical' : 'text-warning'}`} style={{ fontSize: '1.25rem', lineHeight: '1.2' }}>
                 {currentStage}
               </div>
-              <div className="kpi-sub">ATT&CK-aligned derived stage</div>
+              <div className="kpi-sub">Derived from network behaviour</div>
             </div>
             <div className="panel" style={{ padding: '16px' }}>
-              <div className="panel-title" style={{ marginBottom: 8 }}>OPERATIONAL STATUS</div>
-              <div className={`kpi-value ${riskColorClass}`} style={{ fontSize: '1.25rem', lineHeight: '1.2' }}>
-                {result ? (result.current_risk > 0.6 ? 'CRITICAL' : result.current_risk > 0.4 ? 'HIGH' : result.current_risk > 0.2 ? 'ELEVATED' : 'LOW') : 'UNKNOWN'}
-              </div>
-              <div className="kpi-sub">Derived risk level</div>
+              <div className="panel-title" style={{ marginBottom: 8 }}>EARLY WARNING</div>
+              <div className="kpi-value text-info" style={{ fontSize: '1.5rem' }}>{kSteps * 5} sec</div>
+              <div className="kpi-sub">Forecast horizon window</div>
             </div>
-            <div className="panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column' }}>
-              <div className="panel-title" style={{ marginBottom: 8 }}>TELEMETRY REPLAY</div>
+            <div className="panel" style={{ padding: '16px' }}>
+              <div className="panel-title" style={{ marginBottom: 8 }}>FORECAST</div>
+              <div className="kpi-value text-info" style={{ fontSize: '1.5rem' }}>K={kSteps}</div>
+              <div className="kpi-sub">Autoregressive steps</div>
+            </div>
+          </div>
+
+          {/* Simple Threat Status Sentence */}
+          {activeResult && (
+            <div style={{ marginBottom: 24, fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              CyberCast forecasts {isHighRisk ? 'critical' : isElevated ? 'elevated' : 'low'} future infiltration risk over the selected horizon. Current model interpretation: <strong style={{ color: isHighRisk ? 'var(--status-critical)' : isElevated ? 'var(--status-warning)' : 'var(--text-primary)' }}>{currentStage}</strong>.
+            </div>
+          )}
+
+          {appMode === 'LIVE' && (
+            <div className="panel" style={{ padding: '12px 16px', marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                 <span style={{ fontSize: '0.75rem', color: 'var(--status-critical)', fontWeight: 600 }}>LIVE LAB ● CAPTURING</span>
+                 <input id="interface-input" placeholder="e.g., Ethernet" defaultValue="Ethernet" style={{ padding: '4px 8px', fontSize: '12px', background: 'transparent', border: '1px solid var(--border-subtle)', color: 'white' }} />
+                 {liveState.liveStatus?.status === 'CAPTURING' || liveState.liveStatus?.status === 'BUILDING CONTEXT' || liveState.liveStatus?.status === 'PREDICTING' ? (
+                     <button className="btn-toggle" onClick={() => liveState.stopCapture()} style={{ padding: '4px 8px', fontSize: '12px' }}>STOP LIVE MONITORING</button>
+                 ) : (
+                     <button className="btn-toggle" onClick={() => {
+                        const iface = (document.getElementById('interface-input') as HTMLInputElement).value;
+                        liveState.startCapture(iface);
+                     }} style={{ padding: '4px 8px', fontSize: '12px' }}>START LIVE CAPTURE</button>
+                 )}
+                 {liveState.liveStatus?.status && <span style={{ fontSize: '12px', color: 'var(--text-tertiary)' }}>Status: {liveState.liveStatus.status}</span>}
+                 {liveState.buildingContextData && <span style={{ fontSize: '12px', color: 'var(--status-warning)' }}>Building context... {liveState.buildingContextData.states}/10</span>}
+                 {liveState.wsError && <span style={{ fontSize: '12px', color: 'var(--status-critical)' }}>{liveState.wsError}</span>}
+              </div>
+            </div>
+          )}
+
+          {/* Telemetry Replay Control (Moved below KPIs) */}
+          {appMode === 'DEMO' && (
+            <div className="panel" style={{ padding: '12px 16px', marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-tertiary)', fontWeight: 600 }}>TELEMETRY REPLAY</span>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center', flex: 1 }}>
                 <button className="btn-toggle" onClick={() => setIsPlaying(!isPlaying)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, padding: 0 }}>
                   {isPlaying ? <Pause size={14} /> : <Play size={14} />}
@@ -325,8 +371,8 @@ function App() {
                   Idx: {playbackIndex} / {demoData ? demoData.length - 1 : 0}
                 </div>
               </div>
-            </div>
           </div>
+          )}
 
           {/* Timeline Control */}
           <div className="panel" style={{ padding: '12px 16px', marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -353,46 +399,53 @@ function App() {
             {isCheckingHealth ? (
               <div className="state-container">
                 <div className="spinner"></div>
-                <div>Connecting to local backend...</div>
+                <h2>Connecting</h2>
+                <p>Connecting to CyberCast inference engine...</p>
               </div>
             ) : !health || health.status !== 'operational' ? (
               <div className="state-container">
                 <AlertTriangle size={48} color="var(--status-critical)" style={{ marginBottom: 16 }} />
-                <h2 className="text-critical">BACKEND OFFLINE</h2>
-                <p style={{ marginTop: 8 }}>Unable to connect to the local CyberCast inference service.</p>
+                <h2 className="text-critical">Backend offline</h2>
+                <p style={{ marginTop: 8 }}>Inference engine unavailable</p>
                 <button className="btn-primary" style={{ marginTop: 24 }} onClick={checkHealth}>
-                  RETRY CONNECTION
+                  RETRY
                 </button>
               </div>
             ) : error ? (
               <div className="state-container">
                 <AlertTriangle size={48} color="var(--status-critical)" style={{ marginBottom: 16 }} />
-                <h2 className="text-critical">VALIDATION ERROR</h2>
-                <p style={{ marginTop: 8 }}>{error}</p>
+                <h2 className="text-critical">Invalid telemetry</h2>
+                <p style={{ marginTop: 8 }}>Telemetry validation failed: {error}</p>
                 <button className="btn-primary" style={{ marginTop: 24 }} onClick={() => setIsPlaying(true)}>
-                  Resume Playback
+                  RETRY
                 </button>
               </div>
-            ) : loading && !result ? (
+            ) : appMode === 'DEMO' && loading && !result ? (
               <div className="state-container">
                 <div className="spinner"></div>
                 <div>Running inference on sequence context...</div>
               </div>
-            ) : !demoData || demoData.length === 0 ? (
+            ) : appMode === 'DEMO' && (!demoData || demoData.length === 0) ? (
               <div className="state-container">
                 <HardDrive size={48} color="var(--text-tertiary)" style={{ marginBottom: 16 }} />
-                <h2>No telemetry available</h2>
-                <p style={{ marginTop: 8 }}>The dataset is empty or cannot be read.</p>
+                <h2>No telemetry</h2>
+                <p style={{ marginTop: 8 }}>No telemetry loaded</p>
               </div>
-            ) : result ? (
+            ) : appMode === 'LIVE' && !activeResult ? (
+              <div className="state-container">
+                <Activity size={48} color="var(--status-warning)" style={{ marginBottom: 16 }} />
+                <h2>Awaiting Live Telemetry</h2>
+                <p style={{ marginTop: 8 }}>Start capture and wait for 10 initial valid states.</p>
+              </div>
+            ) : activeResult ? (
               <>
-                {activeTab === 'OVERVIEW' && <OverviewPage result={result} timelineMode={timelineMode} />}
-                {activeTab === 'THREAT_TIMELINE' && <ThreatTimelinePage result={result} />}
-                {activeTab === 'EXPLAINABILITY' && <ExplainabilityPage result={result} timelineMode={timelineMode} />}
-                {activeTab === 'NETWORK_EVIDENCE' && <NetworkEvidencePage data={result.telemetry || []} />}
-                {activeTab === 'WORLD_MODEL' && <WorldModelPage result={result} kSteps={kSteps} />}
+                {activeTab === 'OVERVIEW' && <OverviewPage result={activeResult} timelineMode={timelineMode} />}
+                {activeTab === 'THREAT_TIMELINE' && <ThreatTimelinePage result={activeResult} />}
+                {activeTab === 'EXPLAINABILITY' && <ExplainabilityPage result={activeResult} timelineMode={timelineMode} />}
+                {activeTab === 'NETWORK_EVIDENCE' && <NetworkEvidencePage data={activeResult.telemetry || []} />}
+                {activeTab === 'WORLD_MODEL' && <WorldModelPage result={activeResult} kSteps={kSteps} />}
                 {activeTab === 'MODEL_PERFORMANCE' && <ModelPerformancePage />}
-                {activeTab === 'SYSTEM_HEALTH' && <SystemHealthPage health={health} result={result} />}
+                {activeTab === 'SYSTEM_HEALTH' && <SystemHealthPage health={health} result={activeResult} />}
               </>
             ) : null}
           </div>

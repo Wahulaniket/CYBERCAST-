@@ -58,7 +58,7 @@ const Scene = ({ risk, speed }: { risk: number, speed: number }) => {
   );
 };
 
-const WorldModelState = ({ risk, kSteps }: { risk: number, kSteps: number }) => {
+const WorldModelState = ({ risk }: { risk: number }) => {
   const speed = risk > 0.5 ? 2 : risk > 0.3 ? 1 : 0.5;
 
   return (
@@ -68,10 +68,7 @@ const WorldModelState = ({ risk, kSteps }: { risk: number, kSteps: number }) => 
   );
 };
 
-const OverviewPage: React.FC<Props> = ({ result, timelineMode }) => {
-  const telemetryIndex = result.telemetry ? (result.telemetry.length - 1) + timelineMode : 0;
-  const currentTelemetry = result.telemetry ? result.telemetry[Math.max(0, telemetryIndex)] : {};
-
+const OverviewPage: React.FC<Props> = ({ result }) => {
   // Trajectory Data
   const trajectoryData = useMemo(() => {
     const data = [{ name: 'Current', risk: result.current_risk * 100 }];
@@ -90,22 +87,24 @@ const OverviewPage: React.FC<Props> = ({ result, timelineMode }) => {
 
   // Stages definition
   const stages = [
-    'RECONNAISSANCE',
+    'RECON',
     'DISCOVERY',
     'INITIAL ACCESS',
-    'COMMAND & CONTROL'
+    'C2'
   ];
   
   const currentStageFormatted = result.predicted_stage.replace(/_/g, ' ').toUpperCase();
+  // Map long names to short names for display matching
+  const mappedCurrentStage = currentStageFormatted.includes('COMMAND') ? 'C2' : currentStageFormatted.includes('RECONNAISSANCE') ? 'RECON' : currentStageFormatted;
 
   return (
     <div className="grid">
       {/* Top Row */}
       <div className="col-8">
-        <div className="panel" style={{ height: '350px' }}>
-          <div className="panel-title">
+        <div className="panel" style={{ height: '400px' }}>
+          <div className="panel-title" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <span>FUTURE THREAT TRAJECTORY</span>
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)' }}>Predicted risk across the autoregressive forecast</span>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)' }}>Autoregressive forecast from the current network state</span>
           </div>
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={trajectoryData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
@@ -123,13 +122,13 @@ const OverviewPage: React.FC<Props> = ({ result, timelineMode }) => {
       </div>
       
       <div className="col-4">
-        <div className="panel" style={{ height: '350px', display: 'flex', flexDirection: 'column' }}>
-          <div className="panel-title">WORLD MODEL STATE</div>
+        <div className="panel" style={{ height: '400px', display: 'flex', flexDirection: 'column' }}>
+          <div className="panel-title" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <span>WORLD MODEL STATE</span>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)' }}>Conceptual representation of learned state transition</span>
+          </div>
           <div style={{ flex: 1, position: 'relative' }}>
-            <WorldModelState risk={result.current_risk} kSteps={3} />
-            <div style={{ position: 'absolute', bottom: 10, left: 0, right: 0, textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-              Latent state transition concept
-            </div>
+            <WorldModelState risk={result.current_risk} />
           </div>
         </div>
       </div>
@@ -137,7 +136,13 @@ const OverviewPage: React.FC<Props> = ({ result, timelineMode }) => {
       {/* Middle Row */}
       <div className="col-6">
         <div className="panel" style={{ minHeight: '200px' }}>
-          <div className="panel-title">WHY IS THE MODEL ALERTING?</div>
+          <div className="panel-title" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <span>WHY IS THE MODEL ALERTING?</span>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)' }}>Top contributing signals</span>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', fontSize: '0.65rem', color: 'var(--text-tertiary)', marginBottom: '8px' }}>
+            ← lowers risk &nbsp;&nbsp;&nbsp; raises risk →
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {result.top_features && result.top_features.map((feature, idx) => {
               // Extract the actual contribution if available, otherwise fallback
@@ -164,7 +169,10 @@ const OverviewPage: React.FC<Props> = ({ result, timelineMode }) => {
 
       <div className="col-6">
         <div className="panel" style={{ minHeight: '200px' }}>
-          <div className="panel-title">WHAT CHANGED? (10-STATE CONTEXT)</div>
+          <div className="panel-title" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <span>WHAT CHANGED?</span>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)' }}>10-state temporal context</span>
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
               <span>T-9</span>
@@ -203,10 +211,13 @@ const OverviewPage: React.FC<Props> = ({ result, timelineMode }) => {
       {/* Attack Progression */}
       <div className="col-12">
         <div className="panel">
-          <div className="panel-title">ATTACK PROGRESSION</div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '8px' }}>
+          <div className="panel-title" style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <span>ATTACK PROGRESSION</span>
+            <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)', textTransform: 'none' }}>Derived from predicted network behaviour</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '12px' }}>
             {stages.map((stage, idx) => {
-              const isActive = currentStageFormatted.includes(stage) || (currentStageFormatted === 'UNKNOWN' && idx === 0);
+              const isActive = mappedCurrentStage.includes(stage) || (mappedCurrentStage === 'UNKNOWN' && idx === 0);
               return (
                 <React.Fragment key={stage}>
                   <div className={`stage-node ${isActive ? 'active' : ''}`} style={{ flex: 1, padding: '12px 16px', margin: '0 8px' }}>

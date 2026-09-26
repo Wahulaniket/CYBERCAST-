@@ -57,7 +57,7 @@ const Scene = ({ risk, speed }: { risk: number, speed: number }) => {
   );
 };
 
-const WorldModelState = ({ risk, kSteps }: { risk: number, kSteps: number }) => {
+const WorldModelState = ({ risk }: { risk: number }) => {
   const speed = risk > 0.5 ? 2 : risk > 0.3 ? 1 : 0.5;
 
   return (
@@ -67,7 +67,7 @@ const WorldModelState = ({ risk, kSteps }: { risk: number, kSteps: number }) => 
   );
 };
 
-const WorldModelPage: React.FC<Props> = ({ result, kSteps }) => {
+const WorldModelPage: React.FC<Props> = ({ result }) => {
   return (
     <div className="grid">
       <div className="col-12 panel">
@@ -96,7 +96,7 @@ const WorldModelPage: React.FC<Props> = ({ result, kSteps }) => {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '400px' }}>
             <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--accent-cyan)', marginBottom: '16px' }}>WORLD MODEL STATE</div>
             <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-              <WorldModelState risk={result.current_risk} kSteps={kSteps} />
+              <WorldModelState risk={result.current_risk} />
             </div>
             <div style={{ marginTop: '16px', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
               Latent State Transition Visualization
